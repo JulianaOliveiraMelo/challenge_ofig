@@ -1,0 +1,96 @@
+<%- include ('partials/header.ejs') %>
+<div class="col">
+  <h3 class="text-center">Votre Panier</h3>
+
+  <table class="table">
+    <thead>
+      <th>Article</th>
+      <th>Quantité</th>
+      <th>Prix HT</th>
+    </thead>
+    <tbody>
+
+      <% if(listFigurineInCart.length > 0) { %>
+      <% for (let figurineInCart of listFigurineInCart) { %>
+
+      <tr>
+        <td>
+          <img class="img-thumbnail img-cart-list" src="/images/<%=figurineInCart.NAME.toLowerCase()%>.png" alt="">
+          <div class="item-description">
+            <h5 class="item-title"><%=figurineInCart.NAME%></h5>
+            <p class="item-prize">$<%=figurineInCart.PRICE%></p>
+          </div>
+        </td>
+
+        <td>
+          <strong><%=figurineInCart.QTY%></strong>
+          <a href="/cart/add/<%=figurineInCart.ID%>">+</a> / <a href="/cart/delete/<%=figurineInCart.ID%>">-</a>
+        </td>
+
+        <td>
+          <p class="item-subtotal">$<%=(Math.round((figurineInCart.PRICE * figurineInCart.QTY)*100)/100).toFixed(2)%></p>
+        </td>
+      </tr>
+
+      <% } %><%#endfor%>
+
+      <!-- Frais de port -->
+      <tr>
+        <td class="text-right" colspan="2">
+          Frais de port
+        </td>
+        <td class="item-subtotal">
+          $9.99
+        </td>
+      </tr>
+
+    <tfoot>
+      <tr>
+        <td class="text-right" colspan="2">
+          Total HT
+        </td>
+        <td class="item-subtotal">
+          $<%=Math.round(totalHT*100)/100 %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-right" colspan="2">
+          TVA <%=(100*txTVA)%>%
+        </td>
+        <td class="item-subtotal">
+          <%# toFixed(2) limite l'affichage à 2 chiffres après la virgule (2 décimales)%>
+          $<%=montantTVA.toFixed(2)%>
+        </td>
+      </tr>
+
+      <tr class="row-total">
+        <td class="text-right" colspan="2">
+          Total TTC
+        </td>
+        <td class="item-total">
+          $<%=totalTTC.toFixed(2)%>
+        </td>
+      </tr>
+
+      <% } else {%>
+        <tr><td colspan="3">Votre panier est vide</td></tr>
+      <% } %>
+
+
+    </tfoot>
+
+    </tbody>
+
+  </table>
+
+  <div class="row">
+    <div class="col text-right">
+      <div class="btn btn-success">
+        Passer Commande
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- include ('partials/footer.ejs') %>

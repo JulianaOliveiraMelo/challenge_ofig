@@ -1,0 +1,86 @@
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/leftMenu.ejs') %>
+
+<%# la balise idéale est de retour %>
+<article class="col-xs-12 col-lg-9" itemscope itemtype="http://schema.org/Product">
+
+  <header class="row">
+    <%# parce qu'un article peut avoir ses propres header et footer %>
+    <header class="col-lg-6">
+      <img itemprop="image" class="" src="/images/<%=figurine.NAME.toLowerCase()%>.png" alt="Figurine de <%=figurine.NAME%>">
+    </header>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <%# la plupart des navigateurs n'accepteront pas un titre dans un titre, même en changeant le display du titre imbriqué %>
+          <div class="h3">
+            <h2 class="h3 card-title d-inline-block" itemprop="name">
+              <%=figurine.NAME%>
+            </h2>
+            <h3 class="badge badge-pill badge-<%=figurine.CATEGORY.toLowerCase()%>" itemprop="category"><%=figurine.CATEGORY%></h3>
+          </div>
+
+          <p class="card-text">Taille réelle : <%=figurine.SIZE%>cm</p>
+          <p class="card-text"><%=figurine.DESCRIPTION%></p>
+          <p class="card-text">
+            Note moyenne : &#9733; &#9733; &#9733; &#9733; &#9734;
+            <br>
+            <a href="#" data-toggle="modal" data-target="#reviewsModal">Détails des avis</a>
+          </p>
+          <div class="h5" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="availability" content="in stock">
+            <span itemprop="priceCurrency" content="USD">$</span><span itemprop="price"><%=figurine.PRICE%></span>
+          </div>
+          <p class="card-text">
+            <a href="/cart/add/<%=figurine.ID%>" class="link-add-cart">+ Ajouter au panier</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+</article>
+<!-- /.col-lg-9 -->
+
+<!-- Modale des avis -->
+<div class="modal fade" id="reviewsModal" tabindex="-1" role="dialog" aria-labelledby="reviewsModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="reviewsModalLabel">Avis des internautes</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <section class="modal-body">
+
+        <% for (let review of reviewList) { %>
+          <article>
+            <h4 class="h5"><%=review.TITLE%> &nbsp; <span class="small text-muted">
+              <% for (i = 0; i < 5; i++) {%>
+                <% if (review.NOTE <= i) { %>
+                  &#9734;
+                <% }else{ %>
+                  &#9733;
+                <% } %>
+              <% }%>
+                </span></h4>
+            <p class="review-author">par <%=review.AUTHOR%></p>
+            <p><%=review.MESSAGE%></p>
+          </article>
+          <hr>
+          <% } %>
+
+      </section>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include ('partials/footer.ejs') %>

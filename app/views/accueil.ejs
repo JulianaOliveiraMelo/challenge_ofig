@@ -1,0 +1,41 @@
+<%- include ('partials/header.ejs') %>
+
+<%- include ('partials/leftMenu.ejs') %>
+
+<%# mieux qu'une div %>
+<section class="col-lg-9">
+
+  <div class="row">
+    <% for(let figurine of figurineList) { %>
+    <%# la balise idéale %>
+    <article class="col-lg-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <a href="/article/<%=figurine.ID%>">
+          <img class="card-img-top" src="/images/<%=figurine.NAME.toLowerCase()%>.png" alt="figurine de <%=figurine.NAME%>">
+          <%# la catégorie est un mot clé intéressant à associer aux figurines, allez hop, on en fait un h3 %>
+          <%# la balise est tellement bardée de classes qu'il n'y a rien besoin de changer niveau CSS %>
+          <h3 class="badge-category badge badge-pill badge-<%=figurine.CATEGORY.toLowerCase()%>"><%=figurine.CATEGORY%></h3>
+        </a>
+        <div class="card-body">
+          <%# le titre le plus important après celui du site ? celui de chacune des figurines évidemment %>
+          <h2 class="h4 card-title">
+            <a href="/article/<%=figurine.ID%>"><%=figurine.NAME%></a>
+          </h2>
+          <%# par contre, le prix n'est pas important en soi, c'est juste une info => hop, une div avec la class h5 pour ne pas casser la présentation %>
+          <div class="h5">$<%=figurine.PRICE%></div>
+          <p class="card-text"><%=figurine.DESCRIPTION%></p>
+        </div>
+        <div class="card-footer">
+          <%# small a un sens : c'est pour les petits caractères en bas des contrats, alors qu'ici on veut juste que l'affichage soit plus petit %>
+          <span class="small text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+          <a href="/cart/add/<%=figurine.ID%>" class="link-add-cart">+ Ajouter au panier</a>
+        </div>
+      </div>
+    </article>
+    <% } %>
+  </div>
+  <!-- /.row -->
+
+</section>
+<!-- /.col-lg-9 -->
+<%- include ('partials/footer.ejs') %>
